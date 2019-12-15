@@ -10,6 +10,10 @@ export function render(vnode: VNode | string, parentDom: HTMLElement) {
   else {
     const node = document.createElement(vnode.type);
 
+    for (const vkey of Object.keys(vnode.props)) {
+      node['className'] = vnode.props[vkey] as string;
+    }
+
     if (vnode.children) {
       for (const child of vnode.children) {
         render(child, node);

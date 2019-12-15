@@ -6,6 +6,18 @@ export interface VNode {
   children?: VNode[];
 }
 
+
+function prepareVNodeProps(vnode: VNode) {
+  const { props } = vnode;
+
+  // 处理 className
+  if (props.className) {
+    props.class = props.className;
+  }
+
+  return vnode;
+}
+
 /**
  * 创建虚拟 dom
  * React.createElement(component, props, ...children)
@@ -15,11 +27,11 @@ export interface VNode {
  */
 export function createElement(type: string | Component, props: Record<string, any> = {}, ...children: VNode[]): VNode {
   if (type instanceof Component) {
-    return type;
+    return prepareVNodeProps(type);
   }
-  return {
+  return prepareVNodeProps({
     type,
     props,
     children
-  };
+  });
 }
