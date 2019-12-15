@@ -10,6 +10,12 @@ export interface VNode {
 function prepareVNodeProps(vnode: VNode) {
   const { props } = vnode;
 
+  // 处理 className
+  if (props.className) {
+    props.class = props.className;
+    delete props.className;
+  }
+
   // 处理 style
   if (props.style && typeof props.style === 'object') {
     const styles = [];
@@ -18,6 +24,9 @@ function prepareVNodeProps(vnode: VNode) {
     }
     props.style = styles.join(';');
   }
+
+  console.log(props);
+  // 处理事件
 
   return vnode;
 }
