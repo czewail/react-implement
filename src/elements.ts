@@ -10,9 +10,13 @@ export interface VNode {
 function prepareVNodeProps(vnode: VNode) {
   const { props } = vnode;
 
-  // 处理 className
-  if (props.className) {
-    props.class = props.className;
+  // 处理 style
+  if (props.style && typeof props.style === 'object') {
+    const styles = [];
+    for (const stylePropName of Object.keys(props.style)) {
+      styles.push(`${stylePropName.replace(/([A-Z0-9])/, '-$1').toLowerCase()}:${props.style[stylePropName]}`);
+    }
+    props.style = styles.join(';');
   }
 
   return vnode;

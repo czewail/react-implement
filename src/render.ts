@@ -11,7 +11,7 @@ export function render(vnode: VNode | string, parentDom: HTMLElement) {
     const node = document.createElement(vnode.type);
 
     for (const vkey of Object.keys(vnode.props)) {
-      node['className'] = vnode.props[vkey] as string;
+      node.setAttribute(vkey, vnode.props[vkey]);
     }
 
     if (vnode.children) {
