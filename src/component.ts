@@ -1,6 +1,7 @@
 
 
 export class Component {
+  type: string;
   /**
    * 组件属性 props
    */

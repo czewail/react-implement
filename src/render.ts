@@ -15,7 +15,6 @@ export function render(vnode: VNode | string, parentDom: HTMLElement) {
         render(child, node);
       }
     }
-
     parentDom.appendChild(node);
   }
 }
