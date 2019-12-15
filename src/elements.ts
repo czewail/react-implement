@@ -3,6 +3,7 @@ import { Component } from './component';
 export interface VNode {
   type: string;
   props: Record<string, any>;
+  events?: Record<string, EventListenerOrEventListenerObject>;
   children?: VNode[];
 }
 
@@ -25,8 +26,16 @@ function prepareVNodeProps(vnode: VNode) {
     props.style = styles.join(';');
   }
 
-  console.log(props);
+  vnode.events = {};
+
   // 处理事件
+  for (const propName of Object.keys(props)) {
+    if (propName.startsWith('on') && typeof props[propName] === 'function') {
+      const event = props[propName];
+      delete props[propName];
+      vnode.events[propName.slice(2).toLowerCase()] = event as EventListenerOrEventListenerObject;
+    }
+  }
 
   return vnode;
 }

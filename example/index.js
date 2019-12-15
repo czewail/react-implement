@@ -6,6 +6,9 @@ const node = createElement('div', {
   className: 'container',
   style: {
     fontSize: '18px'
+  },
+  onClick: () => {
+    console.log(1234)
   }
 }, 'hello world')
 

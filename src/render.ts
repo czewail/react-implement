@@ -18,6 +18,13 @@ export function render(vnode: VNode | string, parentDom: HTMLElement) {
       node.setAttribute(vkey, vnode.props[vkey]);
     }
 
+    if (vnode.events) {
+      for (const ekey of Object.keys(vnode.events)) {
+        node.addEventListener(ekey, vnode.events[ekey]);
+      }
+    }
+
+
     if (vnode.children) {
       for (const child of vnode.children) {
         render(child, node);
