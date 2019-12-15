@@ -12,13 +12,13 @@ function prepareVNodeProps(vnode: VNode) {
   const { props } = vnode;
 
   // 处理 className
-  if (props.className) {
+  if (props && props?.className) {
     props.class = props.className;
     delete props.className;
   }
 
   // 处理 style
-  if (props.style && typeof props.style === 'object') {
+  if (props && props.style && typeof props.style === 'object') {
     const styles = [];
     for (const stylePropName of Object.keys(props.style)) {
       styles.push(`${stylePropName.replace(/([A-Z0-9])/, '-$1').toLowerCase()}:${props.style[stylePropName]}`);
@@ -28,12 +28,14 @@ function prepareVNodeProps(vnode: VNode) {
 
   vnode.events = {};
 
-  // 处理事件
-  for (const propName of Object.keys(props)) {
-    if (propName.startsWith('on') && typeof props[propName] === 'function') {
-      const event = props[propName];
-      delete props[propName];
-      vnode.events[propName.slice(2).toLowerCase()] = event as EventListenerOrEventListenerObject;
+  if (props) {
+    // 处理事件
+    for (const propName of Object.keys(props)) {
+      if (propName.startsWith('on') && typeof props[propName] === 'function') {
+        const event = props[propName];
+        delete props[propName];
+        vnode.events[propName.slice(2).toLowerCase()] = event as EventListenerOrEventListenerObject;
+      }
     }
   }
 
