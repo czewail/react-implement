@@ -35,4 +35,11 @@ export class Component {
   //     this.queue.push(state);
   //   }
   // }
+
+  render() {
+    return {
+      type: 'div',
+      props: this.props
+    };
+  }
 }

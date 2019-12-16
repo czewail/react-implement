@@ -49,9 +49,16 @@ function prepareVNodeProps(vnode: VNode) {
  * @param props 节点属性
  * @param children 子节点列表
  */
-export function createElement(type: string | Component, props: Record<string, any> = {}, ...children: VNode[]): VNode {
-  if (type instanceof Component) {
-    return prepareVNodeProps(type);
+export function createElement(type: string | typeof Component, props: Record<string, any> = {}, ...children: VNode[]): VNode {
+  if (typeof type === 'function') {
+    const _type = new type({
+      ...props,
+      children
+    });
+
+    const vnode = _type.render();
+
+    return prepareVNodeProps(vnode);
   }
   return prepareVNodeProps({
     type,

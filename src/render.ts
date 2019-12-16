@@ -7,6 +7,7 @@ export function render(vnode: VNode | string, parentDom: HTMLElement) {
     const node = document.createTextNode(vnode);
     parentDom.appendChild(node);
   }
+  // else if (vnode instan) {}
   else {
     const node = document.createElement(vnode.type);
 
